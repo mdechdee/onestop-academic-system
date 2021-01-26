@@ -8,8 +8,10 @@
     "start": "next start"
   },
   "dependencies": {
+    "@types/mysql": "^2.15.17",
     "autoprefixer": "^10.2.3",
     "hamburger-react": "^2.4.0",
+    "mysql": "^2.18.1",
     "next": "10.0.5",
     "postcss": "^8.2.4",
     "react": "17.0.1",
