@@ -14,7 +14,7 @@ export default function Layout({ children }: Props): ReactElement {
       {/* Left Pane*/}
       <div 
         className = {`
-          fixed bg-gray-400 xs:w-1/2 sm:w-1/6 w-1/3 h-full 
+          fixed bg-gray-400 xs:w-1/2 sm:w-1/2 w-1/3 h-full 
           transition-transform transform p-16 
           ${isLeftPaneOpen ? "" : "-translate-x-full"}
         `}
