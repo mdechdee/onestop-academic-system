@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 // fake departments
 
-const departments = [{name: "Computer Science"},{name: "Electrical Engineering"},{name: "Industrial Engineering"}];
+const departments = [{name: "Computer Science"},{name: "Electrical Engineering"},{name: "Industrial Engineering"},{name:"Material Science"}];
 
 export default function Bulletin() {
   
@@ -21,12 +21,12 @@ export default function Bulletin() {
     else if(advanceMajor != ""){
       setAdvanceMajor("");
     }
-    setMinor(department.name);
+    if(department.name!=major) setMinor(department.name);
   }
 
   function selectMajor(department){
     if(major != "" && minor == ""){
-      setDoubleMajor(department.name);
+      if(department.name != major) setDoubleMajor(department.name);
     }
     else if(major != "" && minor != ""){
       setMinor("");
@@ -40,7 +40,7 @@ export default function Bulletin() {
       setAdvanceMajor("");
       setMajor(department.name);
     }
-    else{
+    else if(minor != department.name){
       setMajor(department.name);
     }
 
