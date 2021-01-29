@@ -5,17 +5,29 @@ function fetcher(url: string) {
 }
 
 export function useStudents() {
-    return useSWR(`/api/get-students`,fetcher);
+    const { data, error } = useSWR(`/api/student`,fetcher);
+    if (error) return console.log('error');
+    if (!data) return console.log('No data')
+    return data;
 }
 
 export function useStudent(id: string) {
-    return useSWR(`/api/get-student?id=${id}`,fetcher);
+    const { data, error } = useSWR(`/api/student?id=${id}`,fetcher);
+    if (error) return console.log('error');
+    if (!data) return console.log('No data')
+    return data;
 }
 
 export function useCourses(){
-    return useSWR(`/api/get-courses`,fetcher);
+    const { data, error } = useSWR(`../pages/api/course`,fetcher);
+    if (error) return console.log('error');
+    if (!data) return console.log('No data')
+    return data;
 }
 
 export function useCourse(id: string) {
-    return useSWR(`/api/get-course?id=${id}`,fetcher);
+    const { data, error } = useSWR(`/api/course?id=${id}`,fetcher);
+    if (error) return console.log('error');
+    if (!data) return console.log('No data')
+    return data;
 }

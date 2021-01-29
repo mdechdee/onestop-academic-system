@@ -1,9 +1,12 @@
 import Head from 'next/head'
 import Layout from '../components/Layout'
 import { useState } from 'react';
+import { GetStaticProps } from 'next';
+import { useCourses } from "../lib/swr-hooks";
+import useSWR from 'swr';
 
 // fake departments
-
+const fetcher = url => fetch(url).then(r => r.json())
 const departments = [{name: "Computer Science"},{name: "Electrical Engineering"},{name: "Industrial Engineering"},{name:"Material Science"}];
 
 export default function Bulletin() {
@@ -93,4 +96,15 @@ export default function Bulletin() {
       </div>
     </Layout>
   )
+}
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  // ...
+  const { data ,error} = await useSWR('/api/courses',fetcher);
+
+  return {
+    props: {
+      data
+    }, // will be passed to the page component as props
+  }
 }
