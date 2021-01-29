@@ -2,11 +2,10 @@ import Head from 'next/head'
 import Layout from '../components/Layout'
 import { useState } from 'react';
 import { GetStaticProps } from 'next';
-import { useCourses } from "../lib/swr-hooks";
 import useSWR from 'swr';
+import fetcher from '../util/fetcher';
 
 // fake departments
-const fetcher = url => fetch(url).then(r => r.json())
 const departments = [{name: "Computer Science"},{name: "Electrical Engineering"},{name: "Industrial Engineering"},{name:"Material Science"}];
 
 export default function Bulletin() {
@@ -15,6 +14,9 @@ export default function Bulletin() {
   const [major, setMajor] = useState("");
   const [minor, setMinor] = useState("");
   const [doubleMajor, setDoubleMajor] = useState("");
+
+  const { data, error } = useSWR(`/api/course`,fetcher);
+  console.log(data);
 
   function selectMinor(department){
     if(doubleMajor != ""){
@@ -99,12 +101,7 @@ export default function Bulletin() {
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  // ...
-  const { data ,error} = await useSWR('/api/courses',fetcher);
-
   return {
-    props: {
-      data
-    }, // will be passed to the page component as props
+    props:{}
   }
 }
