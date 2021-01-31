@@ -2,11 +2,18 @@ import React, { CSSProperties, ReactElement, useState } from "react";
 import Hamburger from "hamburger-react";
 import Link from "next/link";
 
-type ProgressRingProps = {
-  radius: number, 
-  stroke: number,
-  progress: number,
-  className: string,
+// type ProgressRingProps = {
+//   radius: number,
+//   stroke: number,
+//   progress: number,
+//   className: string
+// }
+
+interface ProgressRingProps {
+  radius: number;
+  stroke: number;
+  progress: number;
+  className: string;
 }
 
 export default function ProgressRing({radius, stroke, progress, className}: ProgressRingProps): ReactElement {
