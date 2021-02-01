@@ -5,7 +5,6 @@ const handler: NextApiHandler = async (req,res) => {
     try {
         const results = await query(`
             SELECT * from major_requirement
-            ORDER by department
         `);
         return res.json(results);
     } catch (e) {

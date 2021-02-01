@@ -1,11 +1,11 @@
 import Head from 'next/head'
 import Layout from '../components/Layout'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { GetStaticProps } from 'next';
 import useSWR from 'swr';
 import fetcher from '../util/fetcher';
-import { createEmptyStatement, createMetaProperty, createPropertyAssignment } from 'typescript';
-
+import DepartmentTabs from '../components/DepartmentTabs'
+import RequirementSheet from '../components/RequirementSheet';
 
 export default function Bulletin() {
   
@@ -14,13 +14,21 @@ export default function Bulletin() {
   const [minor, setMinor] = useState(null);
   const [doubleMajor, setDoubleMajor] = useState(null);
 
-  const { data, error } = useSWR(`/api/department`,fetcher);
-  if(data) var num_department: number = data.length;
-
+  const { data:departments , error: depErr } = useSWR(`/api/department`,fetcher);
+  const { data:majorRequirements , error: majorReqErr} = useSWR(`/api/requirement/major`,fetcher);
+  const { data:minorRequirements , error: minorReqErr} = useSWR(`/api/requirement/minor`,fetcher);
+  
   function selectMajor(department: number){
     if(advanceMajor==null){
       if(major==null && doubleMajor==null && department != minor) setMajor(department);
-      else if(department == major) setMajor(null);
+      else if(department == major && doubleMajor!=null){
+        setMajor(doubleMajor);
+        setDoubleMajor(null);
+      }
+      else if(department == major && doubleMajor==null){
+        setMinor(null);
+        setMajor(null);
+      }
       else if(department == doubleMajor) setDoubleMajor(null);
       else if(major!=null && doubleMajor==null && minor == null) setDoubleMajor(department);
       else if(major==null && doubleMajor!=null && minor == null) setMajor(department);
@@ -39,6 +47,25 @@ export default function Bulletin() {
     else if(advanceMajor == department) setAdvanceMajor(null);
   }
 
+  const createPage = async() => {
+    if(minor==null && major==null && doubleMajor==null && advanceMajor==null){
+      return <div className="font-sans font-semibold text-xl text-center mt-4 ml-4 mr-4">Choose your department</div>
+    }
+    else if(doubleMajor!=null){
+      return <>doubleMajor</>
+    }
+    else if(advanceMajor!=null){
+      return <>advanceMajor</>
+    }
+    else{
+      return <>
+        <div className="font-sans font-bold text-center mt-4 ml-4 mr-4"> 
+          <p className="text-3xl">Major Requirment</p>
+        </div>
+      </>
+    }
+  }
+
   return (
     <Layout>
       <div className = "container mx-auto h-screen border-2 px-4 border-black"> 
@@ -51,60 +78,17 @@ export default function Bulletin() {
           <p> Select the red star on major departments</p>
         </div>
 
-        <div className="flex border-2">
-          { !data ? (
-            <div className="w-full">
-              <svg
-                className="animate-spin h-5 w-5 text-red"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  stroke-width="4"
-                />
-                <path
-                  className="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                />
-              </svg>
-            </div>
-            ) : 
-          <div className = "container text-2xl mt-4 mb-4 mr-3">
-            { data.map( department => 
-            <div className="bg-gray-100 w-full border-2 border-gray-200 p-2 mt-2 mb-2 hover:bg-gray-200 flex"> 
-              <div className="w-1/2 text-xl text-center pt-3"> {department.name} </div>
-              <div className=" text-xl text-center flex">
-                { (department.id-1)!=minor ? 
-                  <button className="rounded-md bg-red-100 ml-5 mr-5 font-medium pl-2 pr-2 hover:bg-red-200 " onClick={()=>{selectMinor(department.id-1)}}>Minor</button>
-                  : 
-                  <button className="rounded-md bg-red-300 ml-5 mr-5 font-medium pl-2 pr-2 " onClick={()=>{selectMinor(department.id-1)}}>Minor</button>
-                }
-                { (department.id-1)!=major && (department.id-1)!=doubleMajor ?
-                  <button className="rounded-md bg-blue-100 ml-5 mr-5 font-medium pl-2 pr-2 hover:bg-blue-200" onClick={()=>{selectMajor(department.id-1)}}>Major</button>
-                  :
-                  <button className="rounded-md bg-blue-300 ml-5 mr-5 font-medium pl-2 pr-2" onClick={()=>{selectMajor(department.id-1)}}>Major</button>
-                }
-                { (department.id-1)!=advanceMajor ?
-                  <button className="rounded-md bg-green-100 ml-5 mr-5 font-medium pl-2 pr-2 hover:bg-green-200" onClick={()=>{selectAdvanceMajor(department.id-1)}}>Advanced Major</button>
-                  :
-                  <button className="rounded-md bg-green-300 ml-5 mr-5 font-medium pl-2 pr-2" onClick={()=>{selectAdvanceMajor(department.id-1)}}>Advanced Major</button>
-                }
-                
-              </div>
-            </div>
-            )}
-          </div>
-          }
-          <div className ="container h-full bg-gray-100 mt-4">
-
-          </div>
+        <div className="flex border-2 justify-between">
+          <DepartmentTabs 
+            data={departments} 
+            selectMajor={selectMajor} selectMinor={selectMinor} selectAdvanceMajor={selectAdvanceMajor}
+            major={major} minor={minor} advanceMajor={advanceMajor} doubleMajor={doubleMajor}/>
+          <RequirementSheet minorRequirements={minorRequirements}
+            majorRequirements={majorRequirements}
+            departments={departments} 
+            major={major} minor={minor} 
+            doubleMajor={doubleMajor} 
+            advanceMajor={advanceMajor}/>
         </div>
       </div>
     </Layout>

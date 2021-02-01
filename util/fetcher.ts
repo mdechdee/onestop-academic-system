@@ -1,3 +1,3 @@
 export default function fetcher(url: string) {
-    return window.fetch(url).then((res) => res.json());
+    return window.fetch(url).then( (res) => res.json());
 }
