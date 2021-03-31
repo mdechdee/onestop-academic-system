@@ -32,7 +32,7 @@ export default function Layout({children}: Props): ReactElement {
         </ul>
       </div>
       {/* Nav bar */}
-      <div className="w-full flex-row inline-flex items-center bg-gray-300 space-x-3 text-xl font-sans font-black">
+      <div className="w-full flex-row inline-flex items-center bg-kaist space-x-3 text-xl font-sans font-black text-white">
         <div className="z-50"><Hamburger toggled={isLeftPaneOpen} toggle={setLeftPaneOpen} /></div>
         <span> One Stop Academic System </span>
       </div>

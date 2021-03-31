@@ -4,7 +4,7 @@ export default function DepartmentTabs({ data, major, minor, advanceMajor, doubl
     if(!data){
         return (
             <div className = "container text-2xl mt-4 mb-4 mr-3">
-                <div className="w-6 h-6 ml-72 mt-40">
+                <div className="relative w-5 h-5 inset-2/4">
                     <svg
                     className="animate-spin h-5 w-5 text-red"
                     xmlns="http://www.w3.org/2000/svg"

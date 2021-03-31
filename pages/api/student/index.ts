@@ -4,7 +4,7 @@ import { query } from '../../../lib/db';
 const handler: NextApiHandler = async (_,res) => {
     try{
         const result = await query(`
-            SELECT * FROM students
+            SELECT * FROM student
             ORDER BY id
         `)
         return res.json(result);

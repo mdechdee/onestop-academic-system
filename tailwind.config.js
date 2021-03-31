@@ -5,7 +5,18 @@ module.exports = {
     fontFamily: {
       'sans': ['Helvetica', 'Arial', 'sans-serif']
     },
-    extend: {},
+    extend: {
+      colors: {
+        'kaist': '#154e92',
+        'denim': '#1b64bc',
+        'custom-grey': '#e2e2e2',
+      },
+      height: {
+        '100': '25rem',
+        '108': '26rem',
+        '120': '30rem',
+      },
+    },
   },
   variants: {
     extend: {},
