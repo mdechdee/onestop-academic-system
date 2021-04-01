@@ -16,10 +16,12 @@ module.exports = {
         '108': '26rem',
         '120': '30rem',
       },
+      backgroundPosition: {
+        'fromCenter': '50% calc(100% - var(--bottom-distance))',
+      }
     },
   },
   variants: {
     extend: {},
   },
-  plugins: [],
 }

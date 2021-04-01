@@ -59,16 +59,16 @@ export default function RequirementSheet({ requirements,minorRequirements,majorR
     }
     else{
         return (
-            <div className ="container h-120 bg-gray-100 mt-4 border-2 ">
-                <p className="font-bold text-3xl text-center mt-8 mb-8">Graduation Requirement</p>
+            <div className ="container h-120 bg-white mt-4 border-2 ">
+                <p className="font-bold text-3xl text-center mt-8 mb-8 text-kaist">Graduation Requirement</p>
                 <div className="flex flex-col bg-gray-50">
                     <table className="table-auto text-center">
                         <tbody>
-                            <tr className="border-b-2 text-xl font-bold">
+                            <tr className="border-b-2 text-xl font-bold text-white bg-kaist">
                                 <td className="border-r-2">Admitted in 2015 or before</td>
                                 <td>Admitted in 2016 or after</td>
                             </tr>
-                            <tr className="border-b-2">
+                            <tr className="border-b-2 text-kaist">
                                 <td className="border-r-2">130</td>
                                 <td>136</td>
                             </tr>

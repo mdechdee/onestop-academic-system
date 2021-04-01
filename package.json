@@ -24,7 +24,8 @@
   },
   "devDependencies": {
     "@types/node": "^14.14.22",
-    "@types/react": "^17.0.0"
+    "@types/react": "^17.0.0",
+    "tailwind-css-variables": "^3.0.0"
   },
   "prisma": {
     "schema": "./prisma/schema.prisma"
