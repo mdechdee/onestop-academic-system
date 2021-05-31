@@ -8,6 +8,11 @@ interface Props {
 
 export default function Layout({children}: Props): ReactElement {
   const [isLeftPaneOpen, setLeftPaneOpen] = useState(false);
+
+  const signInHandle = () => {
+    console.log("sign in");
+  };
+
   return (
     <div>
        {/* Left Pane*/}
@@ -32,9 +37,14 @@ export default function Layout({children}: Props): ReactElement {
         </ul>
       </div>
       {/* Nav bar */}
-      <div className="w-full flex-row inline-flex items-center bg-kaist space-x-3 text-xl font-sans font-black text-white">
-        <div className="z-50"><Hamburger toggled={isLeftPaneOpen} toggle={setLeftPaneOpen} /></div>
-        <span> One Stop Academic System </span>
+      <div className="w-full flex-row inline-flex bg-kaist items-center place-content-between">
+        <div className="flex-row inline-flex items-center space-x-3 text-xl font-sans font-black text-white ">
+          <div className="z-50"><Hamburger toggled={isLeftPaneOpen} toggle={setLeftPaneOpen}/></div>
+          <span> One Stop Academic System </span>
+        </div>
+        <div className="items-center">
+          <button className="bg-white text-kaist mr-3 text-l font-bold font-sans p-1 rounded-sm" onClick={signInHandle}><Link href="/signin"><a>Sign in</a></Link></button>
+        </div>
       </div>
       {children}
     </div>
